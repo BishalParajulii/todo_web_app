@@ -41,3 +41,17 @@ def updateTask(request ,pk):
             return redirect('/')
 
     return render(request , 'task/update_task.html' , context)
+
+
+def deleteTask(request , pk):
+
+    item = Task.objects.get(id =pk)
+
+    context = {'item' : item}
+
+    if request.method=="POST":
+        item.delete()
+        return redirect('/')
+
+
+    return render(request , 'task/delete.html' , context)
