@@ -1,25 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
-    <h1>TO DO</h1>
-        <form method="post" action="/">
-            {%csrf_token%}
-                {{form.title}}
-                <input type="submit" name="submit Task">
+
+<body class="bg-light">
+    <div class="container mt-5">
+        <h1 class="text-center text-primary">TO DO</h1>
+        <form method="post" action="/" class="form-inline justify-content-center mt-4">
+            {% csrf_token %}
+            <div class="form-group mb-2">
+                {{ form.title }}
+            </div>
+            <button type="submit" class="btn btn-primary mb-2 ml-2">Submit Task</button>
         </form>
 
-
-        {% for task in tasks %}
-        <div>
-            <a href="{% url 'update_task' task.id %}">update</a>
-            <a href="{% url 'delete' task.id %}">delete</a>
-            <p>{{task}}</p>
+        <div class="mt-4">
+            {% for task in tasks %}
+            <div class="d-flex justify-content-between align-items-center mb-2 p-2 bg-white rounded shadow-sm">
+                <div>
+                    {% if task.complete == True %}
+                    <strike class="text-muted"> {{ task }} </strike>
+                    {% else %}
+                    <span class="font-weight-bold"> {{ task }} </span>
+                    {% endif %}
+                </div>
+                <div>
+                    <a href="{% url 'update_task' task.id %}" class="btn btn-sm btn-outline-warning">Update</a>
+                    <a href="{% url 'delete' task.id %}" class="btn btn-sm btn-outline-danger ml-2">Delete</a>
+                </div>
+            </div>
+            {% endfor %}
         </div>
-        {% endfor%}
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
+
 </html>
